@@ -15,7 +15,6 @@ function delay(n) {
     });
 }
 
-
 function pageTransitionToPage(arg){
     
     gsap.to('li.list-item a', {y: 100, duration: .8, display: 'block', stagger: 0.2});
@@ -23,16 +22,16 @@ function pageTransitionToPage(arg){
 
     switch (arg) {
         case 'about':
-            gsap.to('.image-container:nth-child(1)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            gsap.to('.image-container:nth-child(1)',{opacity: 1, left: 20, top: 20, bottom: 40, width: '40%', maxHeight: '100%', duration: 1 } )
             break;
         case 'products':
-            gsap.to('.image-container:nth-child(2)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            gsap.to('.image-container:nth-child(2)',{opacity: 1, left: 20, top: 20, bottom: 40, width: '40%', maxHeight: '100%', duration: 1 } )
             break;
         case 'contacts':
-            gsap.to('.image-container:nth-child(3)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            gsap.to('.image-container:nth-child(3)',{opacity: 1, left: 20, top: 20, bottom: 40, width: '40%', maxHeight: '100%', duration: 1 } )
             break;
         case 'portfolio':
-            gsap.to('.image-container:nth-child(4)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            gsap.to('.image-container:nth-child(4)',{opacity: 1, left: 20, top: 20, bottom: 40, width: '40%', maxHeight: '100%', duration: 1 } )
             break;
     }
     
@@ -46,11 +45,9 @@ function contentAnimation(){
 function pageTransitionToHome(){
     gsap.to('div.row h1', {y: 100, duration: .8, display: 'block', stagger: 0.2, delay: .3});
     gsap.to('div.nav a', {y: 100, duration: 1, display: 'block',});
-    $('.image-container').removeClass('mouse');
 }
 
 function contentAnimationToHome(arg){
-    console.log(arg)
     gsap.from('li.list-item a', {y: 100, duration: .8, display: 'block', stagger: 0.2});
     $('.image-container').addClass('mouse');
 
@@ -104,9 +101,6 @@ function contentAnimationToHome(arg){
             })
             break;
     }
-
-
-
 }
 
 $(function(){
@@ -117,7 +111,6 @@ $(function(){
             name: 'to-pages',
             async leave(data){
                 const done = this.async();
-                
                 pageTransitionToPage(data.next.namespace);
                 await delay(1000);
                 done();
@@ -141,14 +134,12 @@ $(function(){
             name: 'to-home',
             async leave(data){
                 const done = this.async();
-                
                 pageTransitionToHome();
                 await delay(1000);
                 done();
             },
             async enter(data) {
                 contentAnimationToHome(data.current.namespace);
-                
             },
             async after(data){
                 listItemsShow();
@@ -163,7 +154,7 @@ $(function(){
                 ]
             },
             to: {
-                namespcae: ['home']
+                namespcae: 'home'
             }
           },
         ]
