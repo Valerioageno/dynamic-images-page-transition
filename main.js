@@ -16,10 +16,26 @@ function delay(n) {
 }
 
 
-function pageTransitionToPages(){
+function pageTransitionToPage(arg){
+    
     gsap.to('li.list-item a', {y: 100, duration: .8, display: 'block', stagger: 0.2});
     $('.image-container').removeClass('mouse');
-    gsap.to('.image-container:nth-child(1)',{opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+
+    switch (arg) {
+        case 'about':
+            gsap.to('.image-container:nth-child(1)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            break;
+        case 'products':
+            gsap.to('.image-container:nth-child(2)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            break;
+        case 'contacts':
+            gsap.to('.image-container:nth-child(3)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            break;
+        case 'portfolio':
+            gsap.to('.image-container:nth-child(4)',{opacity: 1, left: 20, top: 20, marginBottom: 20, width: '40%', maxHeight: '100%', duration: 1 } )
+            break;
+    }
+    
 }
 
 function contentAnimation(){
@@ -33,32 +49,76 @@ function pageTransitionToHome(){
     $('.image-container').removeClass('mouse');
 }
 
-function contentAnimationToHome(){
+function contentAnimationToHome(arg){
+    console.log(arg)
     gsap.from('li.list-item a', {y: 100, duration: .8, display: 'block', stagger: 0.2});
     $('.image-container').addClass('mouse');
 
-    gsap.fromTo('.image-container:nth-child(1)',
-    {opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 },
-    {opacity: 0, width: 400 } 
-    )
+    switch (arg) {
+        case 'about':
+            gsap.fromTo('.image-container:nth-child(1)',
+            {opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 },
+            {opacity: 0, width: 400 } 
+            )
+                
+            gsap.from('.image-container:nth-child(1)',
+            {
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+                webkitClipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", duration: 1, display: "block" 
+            })
+            break;
+        case 'products':
+            gsap.fromTo('.image-container:nth-child(2)',
+            {opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 },
+            {opacity: 0, width: 400 } 
+            )
+                
+            gsap.from('.image-container:nth-child(2)',
+            {
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+                webkitClipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", duration: 1, display: "block" 
+            })
+            break;
+        case 'contacts':
+            gsap.fromTo('.image-container:nth-child(3)',
+            {opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 },
+            {opacity: 0, width: 400 } 
+            )
+                
+            gsap.from('.image-container:nth-child(3)',
+            {
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+                webkitClipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", duration: 1, display: "block" 
+            })
+            break;
+        case 'portfolio':
+            gsap.fromTo('.image-container:nth-child(4)',
+            {opacity: 1, left: 20, top: 20, width: '40%', maxHeight: '100%', duration: 1 },
+            {opacity: 0, width: 400 } 
+            )
+                
+            gsap.from('.image-container:nth-child(4)',
+            {
+                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
+                webkitClipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", duration: 1, display: "block" 
+            })
+            break;
+    }
 
-    
-    gsap.from('.image-container:nth-child(1)',
-    {
-        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-        webkitClipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)", duration: 1, display: "block" 
-    })
+
+
 }
 
 $(function(){
     barba.init({
         debug: true,
-        transitions: [{
+        transitions: [
+        {
             name: 'to-pages',
             async leave(data){
                 const done = this.async();
                 
-                pageTransitionToPages();
+                pageTransitionToPage(data.next.namespace);
                 await delay(1000);
                 done();
             },
@@ -77,7 +137,7 @@ $(function(){
                 ]
             },
         },
-            {
+        {
             name: 'to-home',
             async leave(data){
                 const done = this.async();
@@ -87,7 +147,7 @@ $(function(){
                 done();
             },
             async enter(data) {
-                contentAnimationToHome();
+                contentAnimationToHome(data.current.namespace);
                 
             },
             async after(data){
@@ -97,7 +157,7 @@ $(function(){
             from: {
                 namespace: [
                     'about',
-                    'product',
+                    'products',
                     'contacts',
                     'portfolio'
                 ]
