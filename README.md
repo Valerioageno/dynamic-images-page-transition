@@ -1,7 +1,7 @@
 <h2 style="text-align: center">Dynamic images page transition 🦾</h2>
 
 <video width="100%" height="auto" autoplay controls>
-  <source src="D:/demo.mov" type="video/mp4">
+  <source src="demo.mov" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
