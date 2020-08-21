@@ -1,9 +1,6 @@
-<h2 style="text-align: center">Dynamic images page transition 🦾</h2>
+<h2 style="text-align:center">Dynamic images page transition 🦾</h2>
 
-<video width="100%" height="auto" autoplay controls>
-  <source src="demo.mov" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![](demo.mov)
 
 ### What this repo want to be
 
