@@ -1,8 +1,20 @@
-const initFunctionality = new initFunctions();
-
+//initialize default functions
+const initImageCursor = new Cursor();
 $(window).ready(initHome);
 $(document).ready(listItemsShow());
 
+//function used in barba lifecycle to control the effects durations
+function delay(n) {
+    n = n || 2000;
+    return new Promise((done) => {
+        setTimeout(() => {
+            done();
+        }, n);
+    });
+}
+
+
+//barba lifecycle
 $(function(){
     barba.init({
         debug: true,
@@ -16,7 +28,7 @@ $(function(){
                 done();
             },
             async enter(data) {
-                contentAnimation();
+                contentAnimationToPage();
             },
             from: {
                 namespace: 'home',
@@ -43,7 +55,7 @@ $(function(){
             },
             async after(data){
                 listItemsShow();
-                initFunctions()
+                Cursor()
             },
             from: {
                 namespace: [
@@ -62,17 +74,9 @@ $(function(){
     
 })
 
+//home list show effect
 function initHome(){
     gsap.from('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2, ease: "power2.out" })
-}
-
-function delay(n) {
-    n = n || 2000;
-    return new Promise((done) => {
-        setTimeout(() => {
-            done();
-        }, n);
-    });
 }
 
 function pageTransitionToPage(arg){
@@ -99,7 +103,7 @@ function pageTransitionToPage(arg){
     
 }
 
-function contentAnimation(){
+function contentAnimationToPage(){
     gsap.from('div.row h1', {y: 170, duration: .8, display: 'block', stagger: 0.2,  ease: "power2.out" });
     gsap.from('div.nav a', {y: 170, duration: .8, display: 'block', delay: .8});
 }
@@ -166,6 +170,7 @@ function contentAnimationToHome(arg){
     gsap.from('.home-left-container div', {y: 1000, duration: .8, display: 'block', stagger: 0.2, delay: 0.5, ease: "power2.out"});
 }
 
+//home list show cursor image effects
 function listItemsShow(){
     $('.list-item').on("mouseover", function(){
         $('a',this).css("color", "white")
@@ -208,8 +213,9 @@ function listItemsShow(){
     })
 }
 
-function initFunctions(){
-    //Cursor 
+//image cursor effect
+function Cursor(){
+   
     var $cursor = $('.mouse');
         
     function moveCursor(e) {
@@ -222,6 +228,7 @@ function initFunctions(){
     }
 
     $(window).on('mousemove', moveCursor);
+
 }
 
 
