@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap');
 
 *{font-family: 'Rajdhani', sans-serif; padding: 0; margin: 0; box-sizing: border-box;}
+body{
+    background-color:#f2f2f2;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
 
-h1{font-size: 80px;}
+h1{font-size: 110px;}
 
 h1 a { color: #14b5ff;}
 ::-webkit-scrollbar {width: 0;}
@@ -12,15 +18,38 @@ li a{
     color: black;
 }
 
-.container{position: absolute;width: 100%; height: 100vh;}
+.container{position: absolute;width: 100%; height: 100vh}
 
 .container ul {position: absolute;text-align: right;list-style-type: none;right: 50px;top: 50%;transform: translateY(-55%);}
 
-.container ul li {transition: .3s; overflow: hidden; height: 100px;} 
+.container ul li {transition: .3s; overflow: hidden; height: 170px;} 
 
 .right-margin{margin-right: 50px;transition: .3s;}
 
-.container ul li a{font-size: 100px;cursor: pointer;}
+.container ul li a{font-size: 170px;cursor: pointer;}
+
+.home-left-container{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    margin: 20px;
+}
+.home-left-container div {
+    height: 100%;
+    width: 23%;
+    overflow: hidden;
+}
+.home-left-container div img{
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.home-left-container div img:hover{
+    transform: scale(1.1)
+
+}
 
 .images-container{
     position: absolute;
@@ -44,12 +73,20 @@ img{
     transition: .3s;
 }
 img:hover{
-    scale: 2;
-    transition: .3s;
+    transform: scale(1.1)
 }
 
 .img-reveal{
     opacity: 1 !important;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #f2f2f2;
+    z-index: 100;
 }
 
 /* Sub page */
@@ -99,7 +136,7 @@ img:hover{
 }
 
 .row{
-    height: 90px;
+    height: 150px;
     width: auto;
     overflow: hidden;
 }
