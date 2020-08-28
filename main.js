@@ -1,4 +1,8 @@
+//reveal list effect
+gsap.from('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2, ease: "power2.out" })
+//initialize the image reveal effects
 const initList = new listItemsShow();
+
 function listItemsShow(){
     let items = document.querySelectorAll('.list-item');
     let links = document.querySelectorAll('a');
@@ -72,11 +76,7 @@ function moveCursor(e) {
         });
     } 
 }
-
 document.addEventListener('mousemove', moveCursor);
-
-//home list show effect
-gsap.from('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2, ease: "power2.out" })
 
 //barba lifecycle
 barba.init({
@@ -136,16 +136,17 @@ barba.init({
     ]
 });
 
-
 function pageTransitionToPage(arg){
 
     gsap.to('.home-left-container div', {opacity: 0, duration: 0.3});
     gsap.to('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2, delay: 0.3,  ease: "power2.out" });
+
     let images = document.querySelectorAll('.image-container');
 
     switch (arg) {
         case 'about':
             gsap.to('.image-container:nth-child(1)',{opacity: 1, left: 20, top: 20, bottom: 40, width: '40%', maxHeight: '100%', duration: 1, delay: 0.3, ease: "power1.out" } )
+            //prevent cursor error
             images[1].style.display = "none";
             images[2].style.display = "none";
             images[3].style.display = "none";
