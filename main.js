@@ -1,7 +1,7 @@
 //initialize default functions
 const initImageCursor = new Cursor();
-$(window).ready(initHome);
-$(document).ready(listItemsShow());
+const readyHome = new initHome();
+const initList = new listItemsShow();
 
 //function used in barba lifecycle to control the effects durations
 function delay(n) {
@@ -15,64 +15,62 @@ function delay(n) {
 
 
 //barba lifecycle
-$(function(){
-    barba.init({
-        debug: true,
-        transitions: [
-        {
-            name: 'to-pages',
-            async leave(data){
-                const done = this.async();
-                pageTransitionToPage(data.next.namespace);
-                await delay(1300);
-                done();
-            },
-            async enter(data) {
-                contentAnimationToPage();
-            },
-            from: {
-                namespace: 'home',
-            },
-            to: {
-                namespace: [
-                    'about',
-                    'products',
-                    'contacts',
-                    'portfolio'
-                ]
-            },
+barba.init({
+    debug: true,
+    transitions: [
+    {
+        name: 'to-pages',
+        async leave(data){
+            const done = this.async();
+            pageTransitionToPage(data.next.namespace);
+            await delay(1300);
+            done();
         },
-        {
-            name: 'to-home',
-            async leave(data){
-                const done = this.async();
-                pageTransitionToHome();
-                await delay(1000);
-                done();
-            },
-            async enter(data) {
-                contentAnimationToHome(data.current.namespace);
-            },
-            async after(data){
-                listItemsShow();
-                Cursor()
-            },
-            from: {
-                namespace: [
-                    'about',
-                    'products',
-                    'contacts',
-                    'portfolio'
-                ]
-            },
-            to: {
-                namespcae: 'home'
-            }
-          },
-        ]
-    });
-    
-})
+        async enter() {
+            contentAnimationToPage();
+        },
+        from: {
+            namespace: 'home',
+        },
+        to: {
+            namespace: [
+                'about',
+                'products',
+                'contacts',
+                'portfolio'
+            ]
+        },
+    },
+    {
+        name: 'to-home',
+        async leave(){
+            const done = this.async();
+            pageTransitionToHome();
+            await delay(1000);
+            done();
+        },
+        async enter(data) {
+            contentAnimationToHome(data.current.namespace);
+        },
+        async after(data){
+            listItemsShow();
+            Cursor()
+        },
+        from: {
+            namespace: [
+                'about',
+                'products',
+                'contacts',
+                'portfolio'
+            ]
+        },
+        to: {
+            namespcae: 'home'
+        }
+    },
+    ]
+});
+
 
 //home list show effect
 function initHome(){
@@ -81,7 +79,7 @@ function initHome(){
 
 function pageTransitionToPage(arg){
 
-    $('.image-container').removeClass('mouse');
+    document.querySelector('.image-container').classList.remove('mouse');
 
     gsap.to('.home-left-container div', {opacity: 0, duration: 0.3});
     gsap.to('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2, delay: 0.3,  ease: "power2.out" });
@@ -115,7 +113,8 @@ function pageTransitionToHome(){
 
 function contentAnimationToHome(arg){
     gsap.from('li.list-item a', {y: 170, duration: .8, display: 'block', stagger: 0.2,  ease: "power2.out" });
-    $('.image-container').addClass('mouse');
+
+    document.querySelector('.image-container').classList.add('mouse');
 
     switch (arg) {
         case 'about':
@@ -172,63 +171,86 @@ function contentAnimationToHome(arg){
 
 //home list show cursor image effects
 function listItemsShow(){
-    $('.list-item').on("mouseover", function(){
-        $('a',this).css("color", "white")
-        $(this).addClass('right-margin');
-        switch ($(this).val()) {
-            case 0:
-                $(".image-container:nth-child(1)").addClass("img-reveal")
-                break;
-            case 1:
-                $(".image-container:nth-child(2)").addClass("img-reveal")
-                break;
 
-            case 2:
-                $(".image-container:nth-child(3)").addClass("img-reveal")
-                break;
-            case 3:
-                $(".image-container:nth-child(4)").addClass("img-reveal")
-                break;
-        }
-    });
+    let items = document.querySelectorAll('.list-item');
+    let links = document.querySelectorAll('a');
+    let images = document.querySelectorAll('.image-container');
 
-    $('.list-item').on("mouseleave", function(){
-        $('a',this).css("color", "black")
-        $(this).removeClass('right-margin');
-        switch ($(this).val()) {
-            case 0:
-                $(".image-container:nth-child(1)").removeClass("img-reveal")
-                break;
-            case 1:
-                $(".image-container:nth-child(2)").removeClass("img-reveal")
-                break;
+    for (let i = 0; i < items.length; i++) {
+        
+        items[i].addEventListener('mouseover', function(){
 
-            case 2:
-                $(".image-container:nth-child(3)").removeClass("img-reveal")
-                break;
-            case 3:
-                $(".image-container:nth-child(4)").removeClass("img-reveal")
-                break;
-        }
-    })
+            switch (this.value) {
+                case 0:
+                    images[0].classList.add("img-reveal");
+                    links[0].style.color = "white";
+                    links[0].classList.add('right-margin');
+                    break;
+                case 1:
+                    images[1].classList.add("img-reveal");
+                    links[1].style.color = "white";
+                    links[1].classList.add('right-margin');
+                    break;
+    
+                case 2:
+                    images[2].classList.add("img-reveal");
+                    links[2].style.color = "white";
+                    links[2].classList.add('right-margin');
+                    break;
+                case 3:
+                    images[3].classList.add("img-reveal");
+                    links[3].style.color = "white";
+                    links[3].classList.add('right-margin');
+                    break;
+            }
+        })
+
+        items[i].addEventListener("mouseleave", function(){
+            switch (this.value) {
+                case 0:
+                    images[0].classList.remove("img-reveal");
+                    links[0].style.color = "black";
+                    links[0].classList.remove('right-margin');
+                    break;
+                case 1:
+                    images[1].classList.remove("img-reveal");
+                    links[1].style.color = "black";
+                    links[1].classList.remove('right-margin');
+                    break;
+                case 2:
+                    images[2].classList.remove("img-reveal");
+                    links[2].style.color = "black";
+                    links[2].classList.remove('right-margin');
+                    break;
+                case 3:
+                    images[3].classList.remove("img-reveal");
+                    links[3].style.color = "black";
+                    links[3].classList.remove('right-margin');
+                    break;
+            }
+        }) 
+    }
 }
 
 //image cursor effect
 function Cursor(){
    
-    var $cursor = $('.mouse');
-        
+    var $cursor = document.querySelectorAll('.mouse');
+
     function moveCursor(e) {
+
+        for (let i = 0; i < $cursor.length; i++) {
+            gsap.to($cursor[i], 0.23, {
+                left: e.pageX - 200,
+                top: e.pageY -300,
+                ease: Power4.easOut
+            });
             
-        gsap.to($cursor, 0.23, {
-            left: e.pageX - 200,
-            top: e.pageY -300,
-            ease: Power4.easOut
-        });
+        }   
+
     }
 
-    $(window).on('mousemove', moveCursor);
-
+    addEventListener('mousemove', moveCursor);
 }
 
 

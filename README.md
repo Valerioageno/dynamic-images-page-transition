@@ -22,70 +22,63 @@ You can find helpful documentation on their websites.
 All the page transitions are stored in the `main.js` file in the follow function:
 
 ```javascript
-$(function(){
-    barba.init({
-        debug: true,
-        transitions: [
-        {
-            name: 'to-pages',
 
-            async leave(data){
-                const done = this.async();
-                pageTransitionToPage(data.next.namespace);
-                await delay(1300);
-                done();
-            },
-
-            async enter(data) {
-                contentAnimationToPage();
-            },
-
-            from: {
-                namespace: 'home',
-            },
-
-            to: {
-                namespace: [
-                    'about',
-                    'products',
-                    'contacts',
-                    'portfolio'
-                ]
-            },
+//barba lifecycle
+barba.init({
+    debug: true,
+    transitions: [
+    {
+        name: 'to-pages',
+        async leave(data){
+            const done = this.async();
+            pageTransitionToPage(data.next.namespace);
+            await delay(1300);
+            done();
         },
-        {
-            name: 'to-home',
-            async leave(data){
-                const done = this.async();
-                pageTransitionToHome();
-                await delay(1000);
-                done();
-            },
-            async enter(data) {
-                //check from which page the transition came from
-                //and trigger the correct effect
-                contentAnimationToHome(data.current.namespace);
-            },
-            async after(data){
-                listItemsShow();
-                initFunctions()
-            },
-            from: {
-                namespace: [
-                    'about',
-                    'products',
-                    'contacts',
-                    'portfolio'
-                ]
-            },
-            to: {
-                namespcae: 'home'
-            }
-          },
-        ]
-    });
-    
-})
+        async enter() {
+            contentAnimationToPage();
+        },
+        from: {
+            namespace: 'home',
+        },
+        to: {
+            namespace: [
+                'about',
+                'products',
+                'contacts',
+                'portfolio'
+            ]
+        },
+    },
+    {
+        name: 'to-home',
+        async leave(){
+            const done = this.async();
+            pageTransitionToHome();
+            await delay(1000);
+            done();
+        },
+        async enter(data) {
+            contentAnimationToHome(data.current.namespace);
+        },
+        async after(data){
+            listItemsShow();
+            Cursor()
+        },
+        from: {
+            namespace: [
+                'about',
+                'products',
+                'contacts',
+                'portfolio'
+            ]
+        },
+        to: {
+            namespcae: 'home'
+        }
+    },
+    ]
+});
 ```
 
 The sequence of the animation from the home page is:
